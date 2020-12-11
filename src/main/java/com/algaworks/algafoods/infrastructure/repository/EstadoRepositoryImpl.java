@@ -21,6 +21,10 @@ public class EstadoRepositoryImpl implements EstadoRepository{
 	@PersistenceContext
 	private EntityManager manager;
 
+	public Estado buscar(Long estadoId){
+		return manager.find(Estado.class, estadoId);
+	}
+
 	@Transactional
 	@Override
 	public Estado salvar(Estado estado) {
@@ -39,7 +43,7 @@ public class EstadoRepositoryImpl implements EstadoRepository{
 			throw new EntidadeEmUsoException(
 					String.format("Estado de ID %d está em uso, então nao poderá ser exluído"));
 		}
-			
+
 	}
 	
 
