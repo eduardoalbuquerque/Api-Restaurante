@@ -31,17 +31,17 @@ public class CadastroRestauranteServive {
 	}
 	
 	public Restaurante salvar(Restaurante restaurante) {
-		Long id  = restaurante.getCozinha().getId();
-		Cozinha cozinha = cozinhaRepository.buscar(id);
+		Long cozinhaId  = restaurante.getCozinha().getId();
+		Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
 		
 		if(cozinha == null) {
-			throw new EntidadeNaoEncontradaException("ID inválido para a cozinha");
+			throw new EntidadeNaoEncontradaException(
+					String.format("ID %d é inválido para a cozinha", cozinhaId));
 		}
 		
 		restaurante.setCozinha(cozinha);
 		
-		return restauranteRepository.adicionar(restaurante);
+		return restauranteRepository.salvar(restaurante);
 	}
-	
 
 }
