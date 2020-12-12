@@ -21,6 +21,12 @@ public class EstadoRepositoryImpl implements EstadoRepository{
 	@PersistenceContext
 	private EntityManager manager;
 
+
+	@Override
+	public List<Estado> listar() {
+		return manager.createQuery("from Estado", Estado.class).getResultList();
+	}
+
 	public Estado buscar(Long estadoId){
 		return manager.find(Estado.class, estadoId);
 	}
@@ -34,15 +40,12 @@ public class EstadoRepositoryImpl implements EstadoRepository{
 	@Transactional
 	@Override
 	public void remover(Long id) {
-		try {
-			manager.remove(id);
-		}catch (EmptyResultDataAccessException e){
-			throw new EntidadeNaoEncontradaException(
-					String.format("Estado de ID 5d não encontrado",id));
-		}catch (DataIntegrityViolationException e){
-			throw new EntidadeEmUsoException(
-					String.format("Estado de ID %d está em uso, então nao poderá ser exluído"));
-		}
+		Estado estado = buscar(id);
+
+		if(estado == null)
+		throw new EmptyResultDataAccessException(1);
+
+		manager.remove(estado);
 
 	}
 	

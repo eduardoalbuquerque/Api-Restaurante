@@ -10,6 +10,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CadastroCidadeService {
 
@@ -22,18 +24,29 @@ public class CadastroCidadeService {
         this.estadoRepository = estadoRepository;
     }
 
+    public List<Cidade> listar(){
+        return cidadeRepository.listar();
+    }
+
+    public Cidade buscar(Long cidadeId){
+
+        return cidadeRepository.buscar(cidadeId);
+    }
+
     public Cidade salvar(Cidade cidade){
         Long estadoId = cidade.getEstado().getId();
+        System.out.println(estadoId);
         Estado estado = estadoRepository.buscar(estadoId);
         if(estadoId == null){
             throw  new EntidadeNaoEncontradaException(
                     String.format("Estado com ID %d não encontrado",estadoId));
         }
         cidade.setEstado(estado);
+        System.out.println(cidade);
         return cidadeRepository.salvar(cidade);
     }
 
-    public void excluir(Long id){
+    public void remover(Long id){
         try {
             cidadeRepository.remover(id);
         }catch (EmptyResultDataAccessException e){

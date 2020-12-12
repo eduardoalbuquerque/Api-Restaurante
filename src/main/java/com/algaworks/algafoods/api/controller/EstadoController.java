@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/estados")
 public class EstadoController {
@@ -18,6 +20,11 @@ public class EstadoController {
 
     public EstadoController(CadastroEstadoService cadastroEstado){
         this.cadastroEstado = cadastroEstado;
+    }
+
+    @GetMapping
+    public List<Estado> listar(){
+        return cadastroEstado.listar();
     }
 
     @GetMapping("/{estadoId}")
@@ -44,6 +51,7 @@ public class EstadoController {
         Estado currentEstado = cadastroEstado.buscar(estadoId);
         if(currentEstado != null){
             BeanUtils.copyProperties(estado,currentEstado,"id");
+            cadastroEstado.salvar(currentEstado);
             return ResponseEntity.ok(currentEstado);
         }
         return ResponseEntity.notFound().build();

@@ -16,14 +16,21 @@ public class CadastroEstadoService {
     private EstadoRepository estadoRepository;
 
     public CadastroEstadoService(EstadoRepository estadoRepository){
+
         this.estadoRepository = estadoRepository;
     }
 
+    public List<Estado> listar(){
+        return estadoRepository.listar();
+    }
+
     public Estado buscar(Long estadoId){
+
         return estadoRepository.buscar(estadoId);
     }
 
     public Estado salvar(Estado estado){
+
         return estadoRepository.salvar(estado);
     }
 
