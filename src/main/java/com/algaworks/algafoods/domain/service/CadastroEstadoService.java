@@ -19,6 +19,10 @@ public class CadastroEstadoService {
         this.estadoRepository = estadoRepository;
     }
 
+    public Estado buscar(Long estadoId){
+        return estadoRepository.buscar(estadoId);
+    }
+
     public Estado salvar(Estado estado){
         return estadoRepository.salvar(estado);
     }

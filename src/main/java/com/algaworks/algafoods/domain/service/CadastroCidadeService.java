@@ -41,7 +41,7 @@ public class CadastroCidadeService {
                     String.format("Cidade com ID %d não encontrada"));
         }catch (DataIntegrityViolationException e){
             throw new EntidadeEmUsoException(
-                    String.format("Cidade de ID %d nõ pode ser excluída", id));
+                    String.format("Cidade de ID %d não pode ser excluída", id));
         }
     }
 
